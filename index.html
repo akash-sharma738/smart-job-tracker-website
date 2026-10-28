@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101828">
+  <title>Smart Job Tracker | Manage Your Career</title>
+  <meta name="description" content="Track job applications, interviews, offers and your career progress in one place.">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a href="#" class="brand">
+      <span class="brand-icon">J</span>
+      <span>Job<span class="brand-light">Track</span></span>
+    </a>
+
+    <p class="nav-label">WORKSPACE</p>
+    <a href="#dashboard" class="nav-link active">▦ &nbsp; Dashboard</a>
+    <a href="#applications" class="nav-link">▤ &nbsp; Applications</a>
+    <a href="#application-form" class="nav-link">＋ &nbsp; Add Application</a>
+
+    <div class="sidebar-bottom">
+      <div class="profile-avatar">JD</div>
+      <div>
+        <strong>Job Seeker</strong>
+        <small>Career workspace</small>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">CAREER MANAGEMENT</p>
+        <h1>Job Application Tracker</h1>
+        <p class="muted">Organize your applications. Stay ahead in your career.</p>
+      </div>
+      <div class="top-actions">
+        <button class="btn btn-outline" id="exportBtn">↓ Export CSV</button>
+        <button class="btn btn-primary" id="topAddBtn">＋ Add Job</button>
+      </div>
+    </header>
+
+    <section id="dashboard" class="section">
+      <div class="section-heading">
+        <div>
+          <h2>Overview</h2>
+          <p class="muted">Your job search at a glance.</p>
+        </div>
+        <span class="today-label" id="todayLabel"></span>
+      </div>
+
+      <div class="stats-grid">
+        <article class="stat-card">
+          <div class="stat-top">
+            <span class="stat-label">Total Applications</span>
+            <span class="stat-icon icon-blue">▤</span>
+          </div>
+          <div class="stat-number" id="totalCount">0</div>
+          <p class="stat-foot">All tracked applications</p>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span class="stat-label">Applied</span>
+            <span class="stat-icon icon-purple">↗</span>
+          </div>
+          <div class="stat-number" id="appliedCount">0</div>
+          <p class="stat-foot">Applications submitted</p>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span class="stat-label">Interviews</span>
+            <span class="stat-icon icon-orange">◷</span>
+          </div>
+          <div class="stat-number" id="interviewCount">0</div>
+          <p class="stat-foot">Interview stage</p>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span class="stat-label">Offers</span>
+            <span class="stat-icon icon-green">✓</span>
+          </div>
+          <div class="stat-number" id="offerCount">0</div>
+          <p class="stat-foot">Offers received</p>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span class="stat-label">Rejected</span>
+            <span class="stat-icon icon-red">×</span>
+          </div>
+          <div class="stat-number" id="rejectedCount">0</div>
+          <p class="stat-foot">Unsuccessful applications</p>
+        </article>
+      </div>
+
+      <div class="dashboard-grid">
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <h3>Application Breakdown</h3>
+              <p class="muted">Status-wise progress</p>
+            </div>
+          </div>
+          <div id="statusBreakdown" class="breakdown">
+            <p class="empty-text">Add your first job to see statistics.</p>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <h3>Recent Applications</h3>
+              <p class="muted">Your latest activity</p>
+            </div>
+            <a href="#applications" class="text-link">View all →</a>
+          </div>
+          <div id="recentApplications" class="recent-list">
+            <p class="empty-text">No applications yet.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="application-form" class="section">
+      <div class="section-heading">
+        <div>
+          <h2 id="formHeading">Add New Application</h2>
+          <p class="muted">Keep all your job details organized.</p>
+        </div>
+      </div>
+
+      <form id="jobForm" class="panel form-panel">
+        <input type="hidden" id="jobId">
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="company">Company Name *</label>
+            <input id="company" name="company" required maxlength="100"
+              placeholder="e.g. Google">
+          </div>
+
+          <div class="field">
+            <label for="role">Job Title *</label>
+            <input id="role" name="role" required maxlength="100"
+              placeholder="e.g. Software Engineer">
+          </div>
+
+          <div class="field">
+            <label for="location">Location</label>
+            <input id="location" name="location" maxlength="100"
+              placeholder="e.g. Bengaluru / Remote">
+          </div>
+
+          <div class="field">
+            <label for="jobType">Employment Type</label>
+            <select id="jobType" name="jobType">
+              <option>Full-time</option>
+              <option>Internship</option>
+              <option>Part-time</option>
+              <option>Contract</option>
+              <option>Remote</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="salary">Expected Salary (optional)</label>
+            <input id="salary" name="salary" maxlength="60"
+              placeholder="e.g. 5 LPA">
+          </div>
+
+          <div class="field">
+            <label for="status">Application Status *</label>
+            <select id="status" name="status" required>
+              <option value="Applied">Applied</option>
+              <option value="Interview">Interview</option>
+              <option value="Rejected">Rejected</option>
+              <option value="Offer">Offer</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="appliedDate">Application Date *</label>
+            <input type="date" id="appliedDate" name="appliedDate" required>
+          </div>
+
+          <div class="field">
+            <label for="deadline">Follow-up / Deadline</label>
+            <input type="date" id="deadline" name="deadline">
+          </div>
+
+          <div class="field full-width">
+            <label for="jobLink">Job Posting URL</label>
+            <input type="url" id="jobLink" name="jobLink"
+              maxlength="1000" placeholder="https://company.com/careers">
+          </div>
+
+          <div class="field full-width">
+            <label for="notes">Notes</label>
+            <textarea id="notes" name="notes" rows="3" maxlength="2000"
+              placeholder="Recruiter details, interview preparation, follow-up notes..."></textarea>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" id="cancelEditBtn" class="btn btn-outline hidden">
+            Cancel Edit
+          </button>
+          <button type="reset" id="resetBtn" class="btn btn-outline">
+            Clear Form
+          </button>
+          <button type="submit" id="saveBtn" class="btn btn-primary">
+            + Save Application
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <section id="applications" class="section">
+      <div class="section-heading">
+        <div>
+          <h2>All Applications</h2>
+          <p class="muted">Search, filter, sort and manage your jobs.</p>
+        </div>
+        <span id="resultCount" class="result-count">0 results</span>
+      </div>
+
+      <div class="panel applications-panel">
+        <div class="toolbar">
+          <div class="search-box">
+            <span>⌕</span>
+            <input type="search" id="searchInput"
+              placeholder="Search company, role, location...">
+          </div>
+
+          <select id="filterStatus" aria-label="Filter by status">
+            <option value="All">All Statuses</option>
+            <option value="Applied">Applied</option>
+            <option value="Interview">Interview</option>
+            <option value="Rejected">Rejected</option>
+            <option value="Offer">Offer</option>
+          </select>
+
+          <select id="sortBy" aria-label="Sort applications">
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+            <option value="company">Company A–Z</option>
+            <option value="role">Job title A–Z</option>
+            <option value="status">Status</option>
+          </select>
+
+          <button id="clearFiltersBtn" class="btn btn-outline">Reset</button>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>COMPANY / ROLE</th>
+                <th>LOCATION</th>
+                <th>DATE APPLIED</th>
+                <th>STATUS</th>
+                <th>FOLLOW-UP</th>
+                <th>ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody id="jobsTableBody"></tbody>
+          </table>
+        </div>
+
+        <div id="emptyState" class="empty-state">
+          <div class="empty-icon">▤</div>
+          <h3>No applications found</h3>
+          <p>Add a job application or change your search filters.</p>
+          <button id="emptyAddBtn" class="btn btn-primary">＋ Add your first job</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Smart Job Tracker · Built with HTML, CSS & JavaScript</p>
+      <p>Your data stays in this browser unless you export it.</p>
+    </footer>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
