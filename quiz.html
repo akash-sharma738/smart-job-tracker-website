@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeMaster - Online Coding Quiz</title>
+    <link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+
+<header class="navbar">
+    <h2>💻 CodeMaster</h2>
+    <nav>
+        <button onclick="showPage('home')">Home</button>
+        <button onclick="showPage('leaderboard')">Leaderboard</button>
+        <button onclick="showPage('progress')">My Progress</button>
+    </nav>
+</header>
+
+<main class="container">
+
+    <!-- HOME PAGE -->
+    <section id="home" class="page">
+        <div class="hero">
+            <h1>Level Up Your Coding Skills!</h1>
+            <p>Practice programming MCQs and improve your coding knowledge.</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <h2 id="homeQuizzes">0</h2>
+                <p>Quizzes Played</p>
+            </div>
+            <div class="stat-card">
+                <h2 id="homeBest">0%</h2>
+                <p>Best Accuracy</p>
+            </div>
+            <div class="stat-card">
+                <h2 id="homePoints">0</h2>
+                <p>Total Points</p>
+            </div>
+        </div>
+
+        <div class="quiz-setup">
+            <h2>Start Your Coding Quiz</h2>
+
+            <label>Your Name</label>
+            <input type="text" id="playerName" placeholder="Enter your name">
+
+            <label>Select Programming Language</label>
+            <select id="category">
+                <option value="All">All Languages</option>
+                <option value="HTML">HTML</option>
+                <option value="CSS">CSS</option>
+                <option value="JavaScript">JavaScript</option>
+                <option value="Python">Python</option>
+                <option value="C">C</option>
+                <option value="C++">C++</option>
+            </select>
+
+            <label>Select Difficulty</label>
+            <select id="difficulty">
+                <option value="Easy">Easy</option>
+                <option value="Medium" selected>Medium</option>
+                <option value="Hard">Hard</option>
+                <option value="All">Mixed</option>
+            </select>
+
+            <label>Number of Questions</label>
+            <select id="questionCount">
+                <option value="5">5 Questions</option>
+                <option value="10" selected>10 Questions</option>
+                <option value="15">15 Questions</option>
+                <option value="20">20 Questions</option>
+            </select>
+
+            <button class="start-btn" onclick="startQuiz()">
+                Start Quiz →
+            </button>
+        </div>
+    </section>
+
+    <!-- QUIZ PAGE -->
+    <section id="quiz" class="page hidden">
+        <div class="quiz-box">
+
+            <div class="quiz-header">
+                <span id="questionCounter">Question 1</span>
+                <span class="timer">⏱ <span id="timer">20</span>s</span>
+            </div>
+
+            <div class="progress-bar">
+                <div id="progressFill"></div>
+            </div>
+
+            <span id="questionCategory" class="category"></span>
+
+            <h2 id="questionText">Question</h2>
+
+            <div id="optionsList" class="options"></div>
+
+            <div id="explanationBox" class="explanation hidden">
+                <h3 id="explanationTitle">Explanation</h3>
+                <p id="explanationText"></p>
+            </div>
+
+            <div class="quiz-footer">
+                <span id="scorePreview">Score: 0</span>
+                <button id="nextBtn" onclick="nextQuestion()" disabled>
+                    Next Question →
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- RESULT PAGE -->
+    <section id="result" class="page hidden">
+        <div class="result-box">
+            <h1>🏆 Quiz Completed!</h1>
+            <h2 id="resultTitle">Great Work!</h2>
+
+            <div class="final-score">
+                <h1 id="finalScore">0</h1>
+                <p>Points</p>
+                <h3 id="finalPercent">0% Accuracy</h3>
+            </div>
+
+            <div class="result-stats">
+                <div>
+                    <h2 id="correctCount">0</h2>
+                    <p>Correct</p>
+                </div>
+                <div>
+                    <h2 id="wrongCount">0</h2>
+                    <p>Wrong</p>
+                </div>
+                <div>
+                    <h2 id="totalCount">0</h2>
+                    <p>Total</p>
+                </div>
+            </div>
+
+            <button onclick="toggleReview()">Review Answers</button>
+            <button onclick="showPage('home')">Play Again</button>
+        </div>
+
+        <div id="reviewPanel" class="review-panel hidden">
+            <h2>Answer Review</h2>
+            <div id="reviewList"></div>
+        </div>
+    </section>
+
+    <!-- LEADERBOARD PAGE -->
+    <section id="leaderboard" class="page hidden">
+        <h1>🏆 Leaderboard</h1>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Player</th>
+                        <th>Language</th>
+                        <th>Difficulty</th>
+                        <th>Score</th>
+                        <th>Accuracy</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboardBody"></tbody>
+            </table>
+        </div>
+        <p id="emptyLeaderboard">No scores yet. Play a quiz first!</p>
+    </section>
+
+    <!-- PROGRESS PAGE -->
+    <section id="progress" class="page hidden">
+        <h1>📈 My Progress</h1>
+
+        <div class="stats">
+            <div class="stat-card">
+                <h2 id="progressQuizzes">0</h2>
+                <p>Quizzes Completed</p>
+            </div>
+            <div class="stat-card">
+                <h2 id="progressAccuracy">0%</h2>
+                <p>Average Accuracy</p>
+            </div>
+            <div class="stat-card">
+                <h2 id="progressPoints">0</h2>
+                <p>Total Points</p>
+            </div>
+        </div>
+
+        <h2>Recent Quiz History</h2>
+        <div id="historyList"></div>
+        <p id="emptyHistory">No quiz history available.</p>
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 CodeMaster | Built with HTML, CSS & JavaScript</p>
+</footer>
+
+<script src="quiz.js"></script>
+</body>
+</html>
